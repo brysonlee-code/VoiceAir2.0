@@ -211,6 +211,40 @@
                     </audio>
                 </div>
                 <p class="demo__note">Upload your demo audio as <code>demo.mp3</code> in the repo root.</p>
+
+                <div class="demo__actions">
+                    <a href="https://buy.stripe.com/5kQfZh4L3e7KdGC5Mk5Rm00" target="_blank" class="btn btn--primary demo__action-btn">Pay $85 Blueprint Fee</a>
+                    <button onclick="openDemoModal()" class="btn btn--outline demo__action-btn">Request Live Demo</button>
+                </div>
+                <p class="demo__actions-note">Get a live AI call in under 60 seconds.</p>
+            </div>
+        </div>
+
+        <!-- Live Demo Modal -->
+        <div class="demo-modal" id="demoModal">
+            <div class="demo-modal__backdrop" onclick="closeDemoModal()"></div>
+            <div class="demo-modal__card">
+                <button class="demo-modal__close" onclick="closeDemoModal()">&times;</button>
+                <h3 class="demo-modal__title">Request a Live Demo Call</h3>
+                <p class="demo-modal__text">Enter your phone number and our AI will call you in under 60 seconds.</p>
+                <form id="demoForm" onsubmit="submitDemoRequest(event)">
+                    <div class="demo-modal__field">
+                        <label class="demo-modal__label" for="demoPhone">Phone Number</label>
+                        <input type="tel" id="demoPhone" placeholder="(216) 555-1234" required class="demo-modal__input">
+                    </div>
+                    <div class="demo-modal__field">
+                        <label class="demo-modal__label" for="demoName">Your Name</label>
+                        <input type="text" id="demoName" placeholder="John Smith" required class="demo-modal__input">
+                    </div>
+                    <button type="submit" class="btn btn--primary btn--large demo-modal__submit" id="demoSubmitBtn">Call Me Now</button>
+                </form>
+                <div class="demo-modal__success" id="demoSuccess" style="display:none;">
+                    <div class="demo-modal__success-icon">
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="22" stroke="url(#sgrad)" stroke-width="2"/><path d="M15 24l6 6 12-12" stroke="url(#sgrad)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><defs><linearGradient id="sgrad" x1="0" y1="0" x2="48" y2="48"><stop stop-color="#5B86E5"/><stop offset="1" stop-color="#9B59B6"/></linearGradient></defs></svg>
+                    </div>
+                    <h4 class="demo-modal__success-title">Call Incoming!</h4>
+                    <p class="demo-modal__success-text">Voice Air 2.0 is calling you now. Pick up to experience the AI live.</p>
+                </div>
             </div>
         </div>
     </section>

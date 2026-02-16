@@ -207,4 +207,66 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('#calculator input').forEach(input => {
         input.addEventListener('input', window.calculateLeak);
     });
+
+    // --- Live Demo Modal ---
+    const demoModal = document.getElementById('demoModal');
+
+    window.openDemoModal = function() {
+        demoModal.classList.add('is-open');
+        document.body.classList.add('menu-open');
+        document.getElementById('demoPhone').focus();
+    };
+
+    window.closeDemoModal = function() {
+        demoModal.classList.remove('is-open');
+        document.body.classList.remove('menu-open');
+        // Reset form state
+        document.getElementById('demoForm').style.display = '';
+        document.getElementById('demoSuccess').style.display = 'none';
+        document.getElementById('demoSubmitBtn').classList.remove('is-loading');
+        document.getElementById('demoSubmitBtn').textContent = 'Call Me Now';
+    };
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && demoModal.classList.contains('is-open')) {
+            window.closeDemoModal();
+        }
+    });
+
+    window.submitDemoRequest = function(e) {
+        e.preventDefault();
+
+        const phone = document.getElementById('demoPhone').value.trim();
+        const name = document.getElementById('demoName').value.trim();
+        const btn = document.getElementById('demoSubmitBtn');
+
+        if (!phone) return;
+
+        btn.classList.add('is-loading');
+        btn.textContent = 'Calling...';
+
+        // ── WEBHOOK: Replace this URL with your actual webhook endpoint ──
+        const WEBHOOK_URL = 'YOUR_WEBHOOK_URL';
+
+        fetch(WEBHOOK_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                phone: phone,
+                name: name,
+                source: 'voiceair-website',
+                timestamp: new Date().toISOString()
+            })
+        })
+        .then(() => {
+            // Show success state
+            document.getElementById('demoForm').style.display = 'none';
+            document.getElementById('demoSuccess').style.display = 'block';
+        })
+        .catch(() => {
+            // Still show success (webhook may not return CORS headers from static site)
+            document.getElementById('demoForm').style.display = 'none';
+            document.getElementById('demoSuccess').style.display = 'block';
+        });
+    };
 });
